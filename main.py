@@ -21,9 +21,16 @@ def read():
     word_tokenize_list = info.tokenize(raw)
     word_dict = info.word_count(word_tokenize_list, raw)
     word_list = info.word_count2(word_tokenize_list, raw)
-    print(sorted(word_list, key=lambda word: word[1]))
+    new_word_list = []
+    for word in sent_tokenize_list:
+        word = word.strip('.')
+        new_word_list += [word]
+    print(new_word_list)
+
+    print(sent_tokenize_list)
+    #print(sorted(word_list, key=lambda word: word[1]))
     info.word_usage(word_dict)
-    Cfg(sent_tokenize_list)
+    Cfg(new_word_list)
 
 # Function that works for multiple types of parsers (You are free to use something else if you want.)
 def check_sentence(parser, sentence):
@@ -37,7 +44,7 @@ def check_sentence(parser, sentence):
     for tree in results:
         tree_found = True
         print(tree)
-        tree.draw()
+        #tree.draw()
     if not tree_found:
         print(sentence, "Does not match the provided grammar.")
     print("--------------------------------------------------")
@@ -64,7 +71,7 @@ def Cfg(sent_tokenize_list):
       Vt -> 'been'
       Vtt -> 'fascinated'
       Conj -> 'when'
-      Adj -> 'younger.'
+      Adj -> 'younger'
       C -> 'and' | 'or'
     """)
     cfg_1_parser = RecursiveDescentParser(cfg_1)
