@@ -13,10 +13,17 @@ from nltk.tokenize import word_tokenize
 from nltk.parse import RecursiveDescentParser, FeatureEarleyChartParser
 
 def main():
-    word_tokenize_list = read()
+    raw = read()
     rules = dict()
-    rules = p.tags(word_tokenize_list, rules)
-    #print(rules)
+    sent_tokenize_list = sent_tokenize(raw)
+    word_tokenize_list = info.tokenize(raw)
+    sent_tokenize_list = info.sentence_stripping(sent_tokenize_list)
+
+    rules = p.tags(list(set(word_tokenize_list)), rules)
+    print(rules)
+    print(sent_tokenize_list[0].split())
+    mem_list = p.shift_reduce(rules, sent_tokenize_list[1].split(), ['s'] )
+    print(mem_list)
 
 def read():
     f = open('DarrenShan.txt', 'rU')
@@ -25,17 +32,13 @@ def read():
     word_tokenize_list = info.tokenize(raw)
     word_dict = info.word_count(word_tokenize_list, raw)
     word_list = info.word_count2(word_tokenize_list, raw)
-    new_word_list = []
-    for word in sent_tokenize_list:
-        word = word.strip('.')
-        new_word_list += [word]
+
     #print(new_word_list)
-
-
     #print(sent_tokenize_list)
-    #print(sorted(word_list, key=lambda word: word[1]))
+    most_used = (sorted(list(set(word_list)), key=lambda word: word[1]))
+
     info.word_usage(word_dict)
-    return word_tokenize_list
+    return raw
     #Cfg(new_word_list)
 
 

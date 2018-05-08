@@ -43,3 +43,10 @@ def word_count2(word_tokenize_list, raw):
         count = raw.count(word)
         word_list += [tuple((word, count))]
     return word_list
+
+def sentence_stripping(sent_tokenize_list):
+    new_word_list = []
+    for word in sent_tokenize_list:
+        word = word.strip('.')
+        new_word_list += [word]
+    return new_word_list

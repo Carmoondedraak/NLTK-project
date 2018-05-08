@@ -19,9 +19,8 @@ def check_sentence(parser, sentence):
     return tree_found
 
 def tags(text, rules):
-    #print(nltk.pos_tag(text))
     for tuplee in nltk.pos_tag(text):
-        add_rule(rules, tuplee[1], tuplee[0])
+        add_rule(rules, tuplee[1], [tuplee[0]])
     return rules
 
 def add_rule(rules, left, right):
@@ -29,3 +28,37 @@ def add_rule(rules, left, right):
     if left not in rules:
         rules[left] = []
     rules[left].append(right)
+
+def reduce(rules, mem_list):
+    reduced = True
+    while reduced == True:
+        reduced = False
+        for key in rules:
+            if [mem_list[-1]] in rules[key]:
+                mem_list[-1] = key
+                reduced = True
+        for key in rules:
+            if len(mem_list) >= 2:
+                if [mem_list[-2], mem_list[-1]] in rules[key]:
+                    mem_list = mem_list[:-1]
+                    mem_list[-1] = key
+                    reduced = True
+        for key in rules:
+            if len(mem_list) >= 3:
+                if [mem_list[-3], mem_list[-2], mem_list[-1]] in rules[key]:
+                    mem_list = mem_list[:-2]
+                    mem_list[-1] = key
+                    reduced = True
+    return mem_list
+
+## Actual Function
+
+def shift_reduce(rules, atoms_list, goal):
+    mem_list = []
+    for atom in atoms_list:
+        mem_list.append(atom)
+        print(mem_list)
+        mem_list = reduce(rules, mem_list)
+        if mem_list == goal:
+            return True
+    return False
