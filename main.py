@@ -22,7 +22,7 @@ def main():
     rules = p.tags(list(set(word_tokenize_list)), rules)
     print(rules)
     print(sent_tokenize_list[0].split())
-    mem_list = p.shift_reduce(rules, sent_tokenize_list[1].split(), ['s'] )
+    mem_list = p.shift_reduce(rules, sent_tokenize_list[1].split(), ['S'] )
     print(mem_list)
 
 def read():

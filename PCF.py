@@ -57,8 +57,9 @@ def shift_reduce(rules, atoms_list, goal):
     mem_list = []
     for atom in atoms_list:
         mem_list.append(atom)
-        print(mem_list)
         mem_list = reduce(rules, mem_list)
+        print(mem_list)
         if mem_list == goal:
+
             return True
     return False
