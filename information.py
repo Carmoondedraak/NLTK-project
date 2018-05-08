@@ -1,6 +1,8 @@
 import nltk
 from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
+# download nltk.download('punkt')
+# download nltk.download('averaged_perceptron_tagger')
 
 # Tokenizes the sentences and words.
 def tokenize(raw):
