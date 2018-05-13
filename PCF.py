@@ -57,9 +57,35 @@ def shift_reduce(rules, atoms_list, goal):
     mem_list = []
     for atom in atoms_list:
         mem_list.append(atom)
+        print(mem_list)
         mem_list = reduce(rules, mem_list)
         print(mem_list)
         if mem_list == goal:
 
             return True
     return False
+
+def Cfg(sent_tokenize_list):
+    cfg_1 = CFG.fromstring("""
+      S -> NP VP
+      NP -> Pro
+      VP -> V Adv Vt Vtt PP
+      PP -> Prep N
+      NP -> D N
+      VP -> V NP
+      VP -> V PP CC
+      PP -> Prep V Pro
+      CC -> Conj NP VP
+      VP -> V Adj
+      D -> 'the'
+      Pro -> 'I' | 'them'
+      Prep -> 'to' | 'by'
+      N -> 'spiders.'
+      V -> 'have' | 'used' | 'collect' | 'was'
+      Adv -> 'always'
+      Vt -> 'been'
+      Vtt -> 'fascinated'
+      Conj -> 'when'
+      Adj -> 'younger'
+      C -> 'and' | 'or'
+    """)
