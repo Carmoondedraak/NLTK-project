@@ -28,7 +28,8 @@ cfg_1 = CFG.fromstring("""
  NP -> Pro
  NP -> NP PP
  NP -> D N
- NP -> Adj N
+ NP -> Adj NP
+ NP -> CC NP
  VP -> V PP
  VP -> V N
  VP -> V Adv Vt Vtt PP
@@ -36,8 +37,10 @@ cfg_1 = CFG.fromstring("""
  VP -> V NP
  VP -> V PP CC
  VP -> V Adj
+ VP -> V Prep Vt N Vtt
  V -> V Vt N V
  V -> V Vt NP
+ V -> V Vt Pro Prep C Vt Pro Vtt
  N -> Adj N
  PP -> Prep NP
  PP -> Prep N
@@ -45,19 +48,20 @@ cfg_1 = CFG.fromstring("""
  Adj -> Adj Adj
  CC -> Conj NP VP
 
+
  D -> 'the'
- Pro -> 'I' | 'them'
+ Pro -> 'I' | 'them' | 'it' | 'It'
  Prep -> 'to' | 'by' | 'through' | 'at' | 'of' | 'for' | 'in'
- N -> 'spiders' | 'hours' | 'shed' | 'bottom' | 'garden' | 'cobwebs' | 'predators' | 'one' | 'it' | 'bedroom'
+ N -> 'spiders' | 'hours' | 'shed' | 'bottom' | 'garden' | 'cobwebs' | 'predators' | 'one' | 'bedroom' | 'mom'
  V -> 'have' | 'used' | 'collect' | 'was' | 'would' | 'rooting' | 'found'
  Adv -> 'always'
- Vt -> 'been' | 'spend' | 'hunt' | 'bring' | 'let'
- Vtt -> 'fascinated' | 'loose'
- Conj -> 'when' 'When'
+ Vt -> 'been' | 'spend' | 'hunt' | 'bring' | 'let' | 'drive'
+ Vtt -> 'fascinated' | 'loose' | 'crazy'
+ Conj -> 'when' | 'When'
  Adj -> 'younger' | 'dusty' | 'old' | 'our' | 'lurking' | 'eight-legged' | 'my'
  C -> 'and' | 'or'
 """)
 
 cfg_1_parser = ChartParser(cfg_1)
-sentence = 'When I found one I would bring it in and let it loose in my bedroom'
+sentence = 'It used to drive my mom crazy'
 check_sentence(cfg_1_parser, sentence)
