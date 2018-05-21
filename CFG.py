@@ -61,7 +61,8 @@ cfg_1 = CFG.fromstring("""
  Adj -> 'younger' | 'dusty' | 'old' | 'our' | 'lurking' | 'eight-legged' | 'my'
  C -> 'and' | 'or'
 """)
-
-cfg_1_parser = ChartParser(cfg_1)
-sentence = 'It used to drive my mom crazy'
-check_sentence(cfg_1_parser, sentence)
+def cfg(rules, sentence):
+    cfg_1_parser = ChartParser(cfg1)
+    tree = parser.parse(rules)
+    check_sentence = check_sentence(cfg_1_parser, sentence)
+    return check_sentence

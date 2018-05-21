@@ -5,6 +5,7 @@
 #-----------------------------------------------------------------------------
 import nltk
 import PCF as p
+import CFG as c
 import information as info
 from nltk import CFG
 from nltk.grammar import FeatureGrammar
@@ -17,14 +18,17 @@ def main():
     rules = dict()
     sent_tokenize_list = sent_tokenize(raw)
     word_tokenize_list = info.tokenize(raw)
+
     sent_tokenize_list = info.sentence_stripping(sent_tokenize_list)
+    print(sent_tokenize_list[0])
 
     rules = p.tags(list(set(word_tokenize_list)), rules)
-    print(rules)
-    print(sent_tokenize_list[0].split())
-    mem_list = p.shift_reduce(rules, sent_tokenize_list[1].split(), ['S'] )
+    #print(rules)
+    pos_tags = [pos for (token,pos)  in nltk.pos_tag(raw)]
+    mem_list = p.shift_reduce(rules, sent_tokenize_list[0].split(), ['S'] )
     print(mem_list)
 
+    c.cfg = ChartParser(pos_tags, sent_tokenize_list[0])
 
 
 def read():

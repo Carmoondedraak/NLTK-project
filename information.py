@@ -54,4 +54,5 @@ def sentence_stripping(sent_tokenize_list):
     for word in sent_tokenize_list:
         word = word.strip('.')
         word = word.strip('?')
+        new_word_list += [word]
     return new_word_list
