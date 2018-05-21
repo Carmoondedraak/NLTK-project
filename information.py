@@ -8,12 +8,17 @@ from nltk.tokenize import word_tokenize
 def tokenize(raw):
     sent_tokenize_list = sent_tokenize(raw)
     word_tokenize_list = word_tokenize(raw)
+    new_word_list = []
+    for word in word_tokenize_list:
+        if word != 'I' and word != 'Darren':
+            word = word.lower()
+            new_word_list += [word]
 
     # Gives information about the text.
     print("Amount of sentences:", len(sent_tokenize_list))
     print("length of text", len(word_tokenize_list))
     print("length of vocabulary:", len(sorted(set(word_tokenize_list))))
-    return word_tokenize_list
+    return new_word_list
 
 # Counts how many times each word is used.
 def word_count(word_tokenize_list, raw):
@@ -48,5 +53,5 @@ def sentence_stripping(sent_tokenize_list):
     new_word_list = []
     for word in sent_tokenize_list:
         word = word.strip('.')
-        new_word_list += [word]
+        word = word.strip('?')
     return new_word_list
