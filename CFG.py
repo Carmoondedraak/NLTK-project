@@ -23,6 +23,11 @@ def check_sentence(parser, sentence):
 # I would hunt the cobwebs for lurking eight-legged predators
 # TOEGEVOEGD : zin gesplit, eerst: .... ,hunting the  cobwebs....
 
+def tags(text, rules):
+    for tuplee in nltk.pos_tag(text):
+        add_rule(rules, tuplee[1], [tuplee[0]])
+    return rules
+
 cfg_1 = CFG.fromstring("""
  S -> NP VP
  NP -> Pro
@@ -61,8 +66,59 @@ cfg_1 = CFG.fromstring("""
  Adj -> 'younger' | 'dusty' | 'old' | 'our' | 'lurking' | 'eight-legged' | 'my'
  C -> 'and' | 'or'
 """)
-def cfg(rules, sentence):
-    cfg_1_parser = ChartParser(cfg1)
-    tree = parser.parse(rules)
-    check_sentence = check_sentence(cfg_1_parser, sentence)
-    return check_sentence
+
+cfg_2 = CFG.fromstring("""
+
+S -> NP VP
+S -> S Conj S
+Adj -> Adj Adj
+NP -> Adj N
+NP -> Pro
+NP -> N
+NP -> D Adj N
+NP -> D N
+VP -> V VP
+V -> V V N V
+VP -> VP VP
+VP -> Adv V
+VP -> V PP
+VP -> V Adj
+VP -> V Im V
+VP -> V V NP
+VP -> VP NP
+VP -> VP PP
+PP -> Prep NP
+PP -> PP PP
+
+
+
+ Pro -> 'I' | 'them'
+ D -> 'the'
+ N -> 'spiders' | 'hours' | 'shed' | 'bottom' | 'garden' | 'cobwebs' | 'predators'
+ V -> 'have' | 'been' | 'fascinated' | 'used' | 'collect' | 'was' | 'would' | 'spend' | 'rooting'| 'hunt'
+ Im -> 'to'
+ Adv -> 'always'
+ Prep -> 'by' | 'through' | 'at' | 'of' | 'for'
+ Conj -> 'when'
+ Adj -> 'younger' | 'dusty' | 'old' | 'our' | 'lurking' | 'eight-legged'
+
+
+""")
+
+def add_to_cfg(words_rules):
+    CFG_string = ""
+    for tuple in words_rules:
+        word = tuple[0]
+        rule = tuple[1]
+
+        CFG_string = CFG_string + '\n' + rule + ' -> ' + "'{}'".format(word)
+    return CFG_string
+
+
+cfg_1_parser = ChartParser(cfg_2)
+sentence = 'When I found one I would bring it in and let it loose in my bedroom'
+#check_sentence(cfg_1_parser, sentence)
+
+print(nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom']))
+word_rules = nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom'])
+print(add_to_cfg(word_rules))
