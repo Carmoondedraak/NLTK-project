@@ -10,7 +10,7 @@ from nltk import CFG
 from nltk.grammar import FeatureGrammar
 from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
-from nltk.parse import RecursiveDescentParser, FeatureEarleyChartParser
+from nltk.parse import RecursiveDescentParser, FeatureEarleyChartParser, ChartParser
 
 def main():
     raw = read()
@@ -24,6 +24,8 @@ def main():
     print(sent_tokenize_list[0].split())
     mem_list = p.shift_reduce(rules, sent_tokenize_list[1].split(), ['S'] )
     print(mem_list)
+
+
 
 def read():
     f = open('DarrenShan.txt', 'rU')
@@ -42,31 +44,31 @@ def read():
     #Cfg(new_word_list)
 
 
-# def Cfg(sent_tokenize_list):
-#     cfg_1 = CFG.fromstring("""
-#       S -> NP VP
-#       NP -> Pro
-#       VP -> V Adv Vt Vtt PP
-#       PP -> Prep N
-#       NP -> D N
-#       VP -> V NP
-#       VP -> V PP CC
-#       PP -> Prep V Pro
-#       CC -> Conj NP VP
-#       VP -> V Adj
-#       D -> 'the'
-#       Pro -> 'I' | 'them'
-#       Prep -> 'to' | 'by'
-#       N -> 'spiders.'
-#       V -> 'have' | 'used' | 'collect' | 'was'
-#       Adv -> 'always'
-#       Vt -> 'been'
-#       Vtt -> 'fascinated'
-#       Conj -> 'when'
-#       Adj -> 'younger'
-#       C -> 'and' | 'or'
-#     """)
-#     cfg_1_parser = RecursiveDescentParser(cfg_1)
-#     check_sentence(cfg_1_parser, sent_tokenize_list[1])
+def Cfg(sent_tokenize_list):
+    cfg_1 = CFG.fromstring("""
+     S -> NP VP
+     NP -> Pro
+     VP -> V Adv Vt Vtt PP
+     PP -> Prep N
+     NP -> D N
+     VP -> V NP
+     VP -> V PP CC
+     PP -> Prep V Pro
+     CC -> Conj NP VP
+     VP -> V Adj
+     D -> 'the'
+     Pro -> 'I' | 'them'
+     Prep -> 'to' | 'by'
+     N -> 'spiders.'
+     V -> 'have' | 'used' | 'collect' | 'was'
+     Adv -> 'always'
+     Vt -> 'been'
+     Vtt -> 'fascinated'
+     Conj -> 'when'
+     Adj -> 'younger'
+     C -> 'and' | 'or'
+    """)
+#cfg_1_parser = RecursiveDescentParser(cfg_1)
+#check_sentence(cfg_1_parser, sent_tokenize_list[1])
 
 main()
