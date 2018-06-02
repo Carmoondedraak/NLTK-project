@@ -1,0 +1,55 @@
+hacPRP -> 'him'|'they'|'you'|'me'|'I'|'myself'|'them'|'it'|'he'|'we'
+JJR -> 'worse'|'temper'|'younger'|'more'|'longer'|'cleaner'
+DT -> 'some'|'this'|'all'|'no'|'an'|'a'|'any'|'every'|'the'
+NN -> 'tale'|'stick'|'country'|'thought'|'break'|'join'|'vacuum'|'day'|'matter'|'understand'
+NN ->'tarantula'|'throw'|'month'|'told'|'hand'|'guard'|'class'|'speak'|'let'|'spider'|'bag'
+NN -> 'baby'|'care'|'sound'|'pet'|'story'|'stroller'|'book'|'storm'|'hunt'|'way'|'bathroom'|'sister'|'money'|'watch'|'roof'|'lunch'|'someone'|'name'|'life'|'everyone'|'guy'|'collect'|'dad'|'sick'|'bring'|'fierce'|'toilet'|'bottom'|'get'|'slip'|'nothing'|'bed'|'mouth'
+NN -> 'hung'|'cross'|'cost'|'d'|'mom'|'reason'|'time'|'fault'|'child'|'everything'|'describe'|'town'|'gift'|'shan'|'bedroom'|'change'|'school'|'friend'|'drawn'|'something'|'cruel'|'everybody'|'heard'|'throat'|'thing'|'eat'|'blowing'|'garden'|'become'|'hell'|'owls'|'cobweb'|'bell'|'beat'|'car'|'dare'|'cartoon'|'imagine'|'die'|'night'|'hour'|'mr'|'song'|'road'|'drive'|'ring'
+VBZ -> 'does'|'wins'|'says'|'is'|'scary'|'treats'|'knows'|'goes'
+PRP -> 'my'|'their'|'his'|'your'|'our'
+RB -> 'sometimes'|'practically'|'lot'|'well'|'always'|'once'|'first'|'ever'|'teacher'|'stole'|'too'|'then'|'wildness'|'late'|'still'|'anyway'|'belly'|'really'|'never'|'here'|'so'|'soon'|'just'|'not'|'even'|'back'|'very'|'simply'|'everywhere'|'yard'|'almost'|'again'|'normally'|'alike'|'inside'|'often'|'not'|'leopard'
+JJ -> 'great'|'ready'|'wish'|'made-up'|'serious'|'crazy'|'enough'|'rotten'|'re'|'happy'|'eight-legged'|'do'|'stuck'|'harm'|'nasty'|'shouted'|'knew'|'dead'|'stupid'|'old'|'stayed'|'ill'|'expect'|'mad'|'big'|'alive'|'mine'|'queasy'|'hey'|'busy'|'dirty'|'dusty'|'ordinary'|'little'|'nobody'|'other'|'smart'|'many'|'irresponsible'|'s'|'angry'|'look'|'obvious'|'clear'|'true'|'right'|'bad'|'ran'|'wild'|'real'|'come'|'last'|'quiet'|'english'|'funny'|'sharp'|'poisonous'|'needless'|'small'
+VBP -> 'quite'|'parents'|'introduction'|'evil'|'say'|'end'|'am'|'steve'|'are'|'ve'|'tiny'|'cool'|'head'|'spend'|'make'|'trick'|'have'
+VB -> 'dalton'|'ll'|'be'|'cobwebs'|'go'|'sleep'|'happen'|'tell'|'kill'|'hatch'|'behind'|'believe'|'fall'|'because…'|'leonard'|'begin'
+RP -> 'away'|'down'|'out'|'up'
+VBN -> 'feared'|'done'|'calmed'|'sucked'|'cried'|'been'|'shed'|'fallen'|'used'|'grinned'|'raised'|'found'|'despised'|'prodded'|'seen'|'nodded'|'fascinated'|'loose'|'made'
+VBD -> 'scared'|'threw'|'received'|'saw'|'had'|'did'|'hollered'|'came'|'played'|'happened'|'stood'|'called'|'started'|'whacked'|'loved'|'was'|'wanted'|'gave'|'met'|'felt'|'took'|'tried'|'ripped'|'said'|'squeezed'|'spoiled'|'lost'|'put'|'were'|'lived'|'went'|'got'|'began'
+TO -> 'to'
+VBG -> 'looking'|'faking'|'guessing'|'laying'|'lurking'|'waiting'|'sitting'|'sliding'|'hooting'|'calling'|'waking'|'passing'|'creeping'|'understanding'|'being'|'going'|'making'|'crawling'|'feeling'|'rushing'|'rooting'|'humming'|'rattling'|'watching'
+NNS -> 'cockroaches'|'characters'|'mistakes'|'bones'|'pants'|'women'|'tears'|'reasons'|'unfolds'|'costs'|'calls'|'stores'|'hours'|'guys'|'worms'|'pieces'|'things'|'people'|'heroes'|'tantrums'|'eggs'|'spiders'|'predators'|'sorts'|'works'|'teachers'|'flies'|'friends'|'cleaners'|'names'|'books'|'endings'|'noises'|'loads'|'ends'|'fights'|'prizes'
+MD -> 'wo'|'can'|'would'|'should'|'could'|'will'
+CD -> 'nine'|'one'|'two'
+RBS -> 'best'
+IN -> 'of'|'after'|'without'|'like'|'past'|'near'|'while'|'under'|'from'|'before'|'about'|'since'|'into'|'tree'|'if'|'on'|'by'|'with'|'above'|'as'|'because'|'except'|'at'|'around'|'for'|'than'|'through'|'in'
+CC -> 'or'|'but'|'and'
+WDT -> 'whatever'|'that'|'which'
+FW -> 'kindergarten'
+WP -> 'what'|'who'
+WRB -> 'wherever'|'where'|'when'
+NNP -> 'Darren'
+EX -> 'there'
+JJS -> 'greatest'
+S -> NP VP
+NP -> PRP
+VP -> VBP
+NP -> NP PP
+NP -> D N
+NP -> Adj NP
+NP -> CC NP
+VP -> V PP
+VP -> V N
+VP -> V Adv Vt Vtt PP
+VP -> V PP
+VP -> V NP
+VP -> V PP CC
+VP -> V Adj
+VP -> V Prep Vt N Vtt
+V -> V Vt N V
+V -> V Vt NP
+V -> V Vt Pro Prep C Vt Pro Vtt
+N -> Adj N
+PP -> Prep NP
+PP -> Prep N
+PP -> Prep V Pro
+Adj -> Adj Adj
+CC -> Conj NP VP

@@ -13,6 +13,8 @@ def tokenize(raw):
         if word != 'I' and word != 'Darren':
             word = word.lower()
             new_word_list += [word]
+    new_word_list += ['I']
+    new_word_list += ['Darren']
 
     # Gives information about the text.
     print("Amount of sentences:", len(sent_tokenize_list))
@@ -53,6 +55,7 @@ def word_count2(word_tokenize_list, raw):
 # strips the sentences from their punctuation marks.
 def sentence_stripping(sent_tokenize_list):
     new_word_list = []
+    #print(sent_tokenize_list)
     for word in sent_tokenize_list:
         word = word.strip('.')
         word = word.strip('?')
@@ -64,7 +67,7 @@ def sentence_stripping(sent_tokenize_list):
         word = word.strip("''")
         word = word.strip(',')
         word = word.strip("``")
-
+        #print(word)
         if word is not '':
             new_word_list += [word]
     return new_word_list

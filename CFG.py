@@ -82,15 +82,36 @@ PP -> PP PP
 # adds the lexicons to our CFG's.
 def add_lexicons_to_cfg(words_rules):
     CFG_string = ""
+
+    # for key in words_rules:
+    #     rule = key
+    #     lexicons = words_rules[key]
+    #     CFG_string = CFG_string + '\n' + rule + ' -> '
+    #     #file.write(CFG_string + '\n' + rule + ' -> ')
+    #     for i in range(len(lexicons)-1):
+    #         #file.write( CFG_string + "'{}'".format(lexicons[i][0]) + '|')
+    #         CFG_string = CFG_string + "'{}'".format(lexicons[i][0]) + '|'
+    #     CFG_string = CFG_string + "'{}'".format(lexicons[len(lexicons)-1][0]) + '\n'
+    #     #file.write( CFG_string + "'{}'".format(lexicons[len(lexicons)-1][0]) + '\n')
+    # print(CFG_string)
+    # return CFG_string
+
     for key in words_rules:
         rule = key
         lexicons = words_rules[key]
-        CFG_string = CFG_string + '\n' + rule + ' -> '
+        #CFG_string = CFG_string + '\n' + rule + ' -> '
+        #file.write(CFG_string + '\n' + rule + ' -> ')
         for i in range(len(lexicons)-1):
-            CFG_string = CFG_string + "'{}'".format(lexicons[i][0]) + '|'
-        CFG_string = CFG_string + "'{}'".format(lexicons[len(lexicons)-1][0]) + '\n'
-
+            #file.write( CFG_string + "'{}'".format(lexicons[i][0]) + '|')
+            CFG_string = CFG_string + '\n' + rule + ' -> ' + "'{}'".format(lexicons[i][0])    #print(CFG_string)
     return CFG_string
+
+def write_to_doc(cfg):
+    file = open("cfg.txt", "w")
+    file.write(cfg)
+    file.close()
+
+
 
 def add_rules_to_cfg(CFG_string, cfg_1):
     for i in cfg_1:
