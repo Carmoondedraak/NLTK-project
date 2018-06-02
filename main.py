@@ -19,17 +19,24 @@ def main():
     sent_tokenize_list = sent_tokenize(raw)
     word_tokenize_list = info.tokenize(raw)
 
-    sent_tokenize_list = info.sentence_stripping(sent_tokenize_list)
-    print(sent_tokenize_list[0])
-
+    word_tokenize_list = info.sentence_stripping(word_tokenize_list)
     rules = p.tags(list(set(word_tokenize_list)), rules)
+    cfgg = c.add_lexicons_to_cfg(rules)
+    cfgg = c.add_rules_to_cfg(cfgg, cfg_1)
+    print(cfgg)
+
     #print(rules)
-    pos_tags = [pos for (token,pos)  in nltk.pos_tag(raw)]
+    #pos_tags = [pos for (token,pos)  in nltk.pos_tag(raw)]
+    #print(pos_tags)
     mem_list = p.shift_reduce(rules, sent_tokenize_list[0].split(), ['S'] )
-    print(mem_list)
 
-    c.cfg = ChartParser(pos_tags, sent_tokenize_list[0])
+    #c.cfg = ChartParser(sent_tokenize_list[0])
 
+cfg_1 = ["S -> NP VP", "NP -> Pro", "NP -> NP PP", "NP -> D N","NP -> Adj NP",
+"NP -> CC NP", "VP -> V PP", "VP -> V N", "VP -> V Adv Vt Vtt PP", "VP -> V PP",
+  "VP -> V NP", "VP -> V PP CC", "VP -> V Adj", "VP -> V Prep Vt N Vtt", "V -> V Vt N V",
+   "V -> V Vt NP", "V -> V Vt Pro Prep C Vt Pro Vtt", "N -> Adj N", "PP -> Prep NP",
+ "PP -> Prep N", "PP -> Prep V Pro", "Adj -> Adj Adj", "CC -> Conj NP VP"]
 
 def read():
     f = open('DarrenShan.txt', 'rU')
