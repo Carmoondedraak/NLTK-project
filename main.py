@@ -8,6 +8,7 @@ import PCF as p
 import CFG as c
 import onzecfg as cc
 import information as info
+import THE_PARSER as pars
 from nltk import CFG
 from nltk.grammar import FeatureGrammar
 from nltk.tokenize import sent_tokenize
@@ -37,10 +38,11 @@ def main():
     #grammar = nltk.parse_cfg(cfgg)
     #grammar = cfgg
     print(sent_tokenize_list[2])
-    parser = ShiftReduceParser(cc.cfg_1)
-    print(cc.cfg_1)
-    print(parser)
-    p.check_sentence(parser, "I would spend hours rooting")
+    parser = ShiftReduceParser(pars.cfg_1)
+    #print(cc.cfg_1)
+    #print(parser)
+    print(nltk.pos_tag([I],[have],[always],[been],[fascinated], [by], [spiders]))
+    p.check_sentence(parser, "I have always been fascinated by spiders")
     #p.shift_reduce(cc.cfg_1, ['I','have'] , 'S')
 
 cfg_1 = ["S -> NP VP", "NP -> Pro", "NP -> NP PP", "NP -> D N","NP -> Adj NP",

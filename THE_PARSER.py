@@ -4,42 +4,31 @@ from nltk.parse.generate import generate, demo_grammar
 
 ###################### THE CFG #############################
 
-cfg_1 = CFG.fromstring("""
+from nltk import ChartParser
+from random import choice
+grammar = CFG.fromstring("""
 
     S -> NP VP
-    S -> S Conj S
-    Adj -> Adj Adj
-    NP -> Adj N
-    NP -> Adj NP
+    S -> NP
+    NP -> PRP
     NP -> NP PP
-    NP -> Pro
-    NP -> N
-    NP -> D Adj N
-    NP -> D N
-    NP -> CCC NP
-    VP -> V VP
-    V -> V V N V
-    V -> V V NP
-    V -> V V Pro Prep C V Pro V
-    VP -> VP VP
-    VP -> Adv V
-    VP -> V PP
-    VP -> V Adj
-    VP -> V Im V
-    VP -> V V NP
-    VP -> VP NP
-    VP -> VP PP
-    VP -> V N
-    VP -> V PP CC
-    VP -> V NP
-    VP -> V Adv V V PP
-    VP -> V Prep V N V
-    PP -> Prep NP
-    PP -> Prep N
-    PP -> PP PP
-    PP -> Prep V Pro
-    N -> Adj N
-    CCC -> Conj NP VP
+    NP -> D NN
+    NP -> D NP NP
+    NP -> NN
+    NP -> NNS
+    NP -> JJ NP
+    NP -> CC NP
+    NP -> IN NNS
+    NP -> IN NN
+    NP -> IN NN PRP
+    VP -> MD RB VBN JJ NP
+    VP -> VBN NP
+    PP -> WRB NP VP
+    VP -> VBD JJR
+    VP -> MD VBP NP VBG
+    VP -> MD
+    IP -> IN
+
 
 
     N -> NN
@@ -471,12 +460,33 @@ cfg_1 = CFG.fromstring("""
     MD -> 'will'
     MD -> 'could'
     MD -> 'should'
+    MD -> 'have'
     JJS -> 'greatest'
     CC -> 'and'
     CC -> 'but'
 
 """)
 
+def produce(grammar, symbol):
+    words = []
+    productions = grammar.productions(lhs = symbol)
+    if productions != None:
+        production = choice(productions)
+        for sym in production.rhs():
+            if isinstance(sym, str):
+                words.append(sym)
+            else:
+                words.extend(produce(grammar, sym))
+        return words
+    else:
+        print("hey")
+        produce(gr, gr.start())
 
-for sentence in generate(cfg_1, depth=5):
-    print(' '.join(sentence))
+
+parser = ChartParser(grammar)
+gr = parser.grammar()
+for i in range(50):
+    print (' '.join(produce(gr, gr.start())))
+
+# for sentence in generate(cfg_1, depth=5):
+#     print(' '.join(sentence))
