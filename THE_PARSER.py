@@ -5,7 +5,6 @@ from nltk.parse import RecursiveDescentParser, FeatureEarleyChartParser, ChartPa
 from nltk.tokenize import sent_tokenize
 import nltk
 from random import choice
-from main import read
 
 # Function that works for multiple types of parsers
 def check_sentence(parser, sentence):
@@ -26,13 +25,13 @@ def check_sentence(parser, sentence):
 
 ###################### THE CFG #############################
 
-cfg_1 = CFG.fromstring("""
+from nltk import ChartParser
+from random import choice
+grammar = CFG.fromstring("""
 
     S -> NP VP
-    S -> S Conj S
-    Adj -> Adj Adj
-    NP -> Adj N
-    NP -> Adj NP
+    S -> NP
+    NP -> PRP
     NP -> NP PP
     NP -> Pro
     NP -> N
@@ -493,10 +492,38 @@ cfg_1 = CFG.fromstring("""
     MD -> 'will'
     MD -> 'could'
     MD -> 'should'
+    MD -> 'have'
     JJS -> 'greatest'
     CC -> 'and'
     CC -> 'but'
 """)
+
+def produce(grammar, symbol):
+    words = []
+    productions = grammar.productions(lhs = symbol)
+    if productions != None:
+        production = choice(productions)
+        for sym in production.rhs():
+            if isinstance(sym, str):
+                words.append(sym)
+            else:
+                words.extend(produce(grammar, sym))
+        return words
+    else:
+        print("hey")
+        produce(gr, gr.start())
+
+
+parser = ChartParser(grammar)
+gr = parser.grammar()
+result = None
+while result == None:
+    try:
+        result = ' '.join(produce(gr, gr.start()))
+    except:
+        pass
+
+print(result)
 
 
 #for sentence in generate(cfg_1, depth=5):

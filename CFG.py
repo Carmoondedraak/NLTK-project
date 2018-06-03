@@ -108,10 +108,17 @@ def add_lexicons_to_cfg(words_rules):
 
 def write_to_doc(cfg):
     file = open("tryall.py", "w")
-    lines = file.readlines()
-    line[2] = file.write(cfg)
-
+    file.write(cfg)
     file.close()
+
+cfg_1_parser = ChartParser(cfg_2)
+sentence = 'I have always been fascinated by spiders'
+check_sentence(cfg_1_parser, sentence)
+
+#print(nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom']))
+#word_rules = nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom'])
+#print(add_to_cfg(word_rules))
+
 
 
 
