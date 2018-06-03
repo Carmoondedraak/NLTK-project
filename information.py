@@ -8,12 +8,19 @@ from nltk.tokenize import word_tokenize
 def tokenize(raw):
     sent_tokenize_list = sent_tokenize(raw)
     word_tokenize_list = word_tokenize(raw)
+    new_word_list = []
+    for word in word_tokenize_list:
+        if word != 'I' and word != 'Darren':
+            word = word.lower()
+            new_word_list += [word]
+    new_word_list += ['I']
+    new_word_list += ['Darren']
 
     # Gives information about the text.
     print("Amount of sentences:", len(sent_tokenize_list))
     print("length of text", len(word_tokenize_list))
     print("length of vocabulary:", len(sorted(set(word_tokenize_list))))
-    return word_tokenize_list
+    return new_word_list
 
 # Counts how many times each word is used.
 def word_count(word_tokenize_list, raw):
@@ -37,6 +44,7 @@ def word_usage(word_dict):
                 listy = (tuple((key, count)))
     print(listy)
 
+# counts how many times each word is used.
 def word_count2(word_tokenize_list, raw):
     word_list = []
     for word in sorted(set(word_tokenize_list)):
@@ -44,9 +52,22 @@ def word_count2(word_tokenize_list, raw):
         word_list += [tuple((word, count))]
     return word_list
 
+# strips the sentences from their punctuation marks.
 def sentence_stripping(sent_tokenize_list):
     new_word_list = []
+    #print(sent_tokenize_list)
     for word in sent_tokenize_list:
         word = word.strip('.')
-        new_word_list += [word]
+        word = word.strip('?')
+        word = word.strip('(')
+        word = word.strip(')')
+        word = word.strip('!')
+        word = word.strip(':')
+        word = word.strip('""')
+        word = word.strip("''")
+        word = word.strip(',')
+        word = word.strip("``")
+        #print(word)
+        if word is not '':
+            new_word_list += [word]
     return new_word_list

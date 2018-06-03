@@ -28,44 +28,18 @@ def tags(text, rules):
         add_rule(rules, tuplee[1], [tuplee[0]])
     return rules
 
-cfg_1 = CFG.fromstring("""
- S -> NP VP
- NP -> Pro
- NP -> NP PP
- NP -> D N
- NP -> Adj NP
- NP -> CC NP
- VP -> V PP
- VP -> V N
- VP -> V Adv Vt Vtt PP
- VP -> V PP
- VP -> V NP
- VP -> V PP CC
- VP -> V Adj
- VP -> V Prep Vt N Vtt
- V -> V Vt N V
- V -> V Vt NP
- V -> V Vt Pro Prep C Vt Pro Vtt
- N -> Adj N
- PP -> Prep NP
- PP -> Prep N
- PP -> Prep V Pro
- Adj -> Adj Adj
- CC -> Conj NP VP
 
-
- D -> 'the'
- Pro -> 'I' | 'them' | 'it' | 'It'
- Prep -> 'to' | 'by' | 'through' | 'at' | 'of' | 'for' | 'in'
- N -> 'spiders' | 'hours' | 'shed' | 'bottom' | 'garden' | 'cobwebs' | 'predators' | 'one' | 'bedroom' | 'mom'
- V -> 'have' | 'used' | 'collect' | 'was' | 'would' | 'rooting' | 'found'
- Adv -> 'always'
- Vt -> 'been' | 'spend' | 'hunt' | 'bring' | 'let' | 'drive'
- Vtt -> 'fascinated' | 'loose' | 'crazy'
- Conj -> 'when' | 'When'
- Adj -> 'younger' | 'dusty' | 'old' | 'our' | 'lurking' | 'eight-legged' | 'my'
- C -> 'and' | 'or'
-""")
+ # D -> 'the'
+ # Pro -> 'I' | 'them' | 'it' | 'It'
+ # Prep -> 'to' | 'by' | 'through' | 'at' | 'of' | 'for' | 'in'
+ # N -> 'spiders' | 'hours' | 'shed' | 'bottom' | 'garden' | 'cobwebs' | 'predators' | 'one' | 'bedroom' | 'mom'
+ # V -> 'have' | 'used' | 'collect' | 'was' | 'would' | 'rooting' | 'found'
+ # Adv -> 'always'
+ # Vt -> 'been' | 'spend' | 'hunt' | 'bring' | 'let' | 'drive'
+ # Vtt -> 'fascinated' | 'loose' | 'crazy'
+ # Conj -> 'when' | 'When'
+ # Adj -> 'younger' | 'dusty' | 'old' | 'our' | 'lurking' | 'eight-legged' | 'my'
+ # C -> 'and' | 'or'
 
 cfg_2 = CFG.fromstring("""
 
@@ -105,16 +79,39 @@ PP -> PP PP
 
 """)
 
-def add_to_cfg(words_rules):
+# adds the lexicons to our CFG's.
+def add_lexicons_to_cfg(words_rules):
     CFG_string = ""
-    for tuple in words_rules:
-        word = tuple[0]
-        rule = tuple[1]
 
-        CFG_string = CFG_string + '\n' + rule + ' -> ' + "'{}'".format(word)
+    # for key in words_rules:
+    #     rule = key
+    #     lexicons = words_rules[key]
+    #     CFG_string = CFG_string + '\n' + rule + ' -> '
+    #     #file.write(CFG_string + '\n' + rule + ' -> ')
+    #     for i in range(len(lexicons)-1):
+    #         #file.write( CFG_string + "'{}'".format(lexicons[i][0]) + '|')
+    #         CFG_string = CFG_string + "'{}'".format(lexicons[i][0]) + '|'
+    #     CFG_string = CFG_string + "'{}'".format(lexicons[len(lexicons)-1][0]) + '\n'
+    #     #file.write( CFG_string + "'{}'".format(lexicons[len(lexicons)-1][0]) + '\n')
+    # print(CFG_string)
+    # return CFG_string
+
+    for key in words_rules:
+        rule = key
+        lexicons = words_rules[key]
+        #CFG_string = CFG_string + '\n' + rule + ' -> '
+        #file.write(CFG_string + '\n' + rule + ' -> ')
+        for i in range(len(lexicons)-1):
+            #file.write( CFG_string + "'{}'".format(lexicons[i][0]) + '|')
+            CFG_string = CFG_string + '\n' + rule + ' -> ' + "'{}'".format(lexicons[i][0])    #print(CFG_string)
     return CFG_string
 
+def write_to_doc(cfg):
+    file = open("tryall.py", "w")
+    lines = file.readlines()
+    line[2] = file.write(cfg)
 
+<<<<<<< HEAD
 cfg_1_parser = ChartParser(cfg_2)
 sentence = 'I have always been fascinated by spiders'
 check_sentence(cfg_1_parser, sentence)
@@ -122,3 +119,18 @@ check_sentence(cfg_1_parser, sentence)
 #print(nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom']))
 #word_rules = nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom'])
 #print(add_to_cfg(word_rules))
+=======
+    file.close()
+
+
+
+def add_rules_to_cfg(CFG_string, cfg_1):
+    for i in cfg_1:
+        CFG_string = CFG_string + '\n' + "{}".format(i)
+    return CFG_string
+
+#word_rules = nltk.pos_tag(['When', 'I', 'found', 'one', 'I', 'would', 'bring', 'it', 'in', 'and', 'let', 'it', 'loose', 'in', 'my', 'bedroom'])
+#cfg_3 = add_lexicons_to_cfg(word_rules)
+#cfg_3 = add_rules_to_cfg(cfg_3, cfg_1)
+#print( add_lexicons_to_cfg(word_rules))
+>>>>>>> 7b3f2ad5a269b6d7f1d6cb32b15222ffaebf2dd9
