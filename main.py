@@ -22,7 +22,8 @@ def main():
     #print(word_tokenize_list)
 
     word_tokenize_list = info.sentence_stripping(word_tokenize_list)
-    #print(word_tokenize_list)
+    sent_tokenize_list = info.sentence_stripping(sent_tokenize_list)
+    print(word_tokenize_list)
     rules = p.tags(list(set(word_tokenize_list)), rules)
     cfgg = c.add_lexicons_to_cfg(rules)
     cfgg = c.add_rules_to_cfg(cfgg,cfg_1)
@@ -35,11 +36,11 @@ def main():
     #print(sent_tokenize_list[0])
     #grammar = nltk.parse_cfg(cfgg)
     #grammar = cfgg
-    print(sent_tokenize_list[0])
+    print(sent_tokenize_list[2])
     parser = ShiftReduceParser(cc.cfg_1)
     print(cc.cfg_1)
     print(parser)
-    p.check_sentence(parser, 'calls')
+    p.check_sentence(parser, "I would spend hours rooting")
     #p.shift_reduce(cc.cfg_1, ['I','have'] , 'S')
 
 cfg_1 = ["S -> NP VP", "NP -> Pro", "NP -> NP PP", "NP -> D N","NP -> Adj NP",

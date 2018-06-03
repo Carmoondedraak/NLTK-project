@@ -107,8 +107,10 @@ def add_lexicons_to_cfg(words_rules):
     return CFG_string
 
 def write_to_doc(cfg):
-    file = open("cfg.txt", "w")
-    file.write(cfg)
+    file = open("tryall.py", "w")
+    lines = file.readlines()
+    line[2] = file.write(cfg)
+
     file.close()
 
 
