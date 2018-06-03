@@ -1,6 +1,68 @@
 from nltk.grammar import FeatureGrammar
 from nltk import CFG
+from nltk.parse.generate import generate, demo_grammar
+
+###################### THE CFG #############################
+
 cfg_1 = CFG.fromstring("""
+
+    S -> NP VP
+    S -> S Conj S
+    Adj -> Adj Adj
+    NP -> Adj N
+    NP -> Adj NP
+    NP -> NP PP
+    NP -> Pro
+    NP -> N
+    NP -> D Adj N
+    NP -> D N
+    NP -> CCC NP
+    VP -> V VP
+    V -> V V N V
+    V -> V V NP
+    V -> V V Pro Prep C V Pro V
+    VP -> VP VP
+    VP -> Adv V
+    VP -> V PP
+    VP -> V Adj
+    VP -> V Im V
+    VP -> V V NP
+    VP -> VP NP
+    VP -> VP PP
+    VP -> V N
+    VP -> V PP CC
+    VP -> V NP
+    VP -> V Adv V V PP
+    VP -> V Prep V N V
+    PP -> Prep NP
+    PP -> Prep N
+    PP -> PP PP
+    PP -> Prep V Pro
+    N -> Adj N
+    CCC -> Conj NP VP
+
+
+    N -> NN
+    N -> NNS
+    Adj -> JJ
+    Adj -> JJR
+    Adj -> JJS
+    V -> VBG
+    V -> VBD
+    V -> VBP
+    V -> VB
+    V -> VBZ
+    V -> VBN
+    V -> MD
+    Adv -> RB
+    Adv -> WRB
+    Pro -> PRP
+    Pro -> WP
+    Det -> DT
+    Det -> WDT
+    Prep -> IN
+    C -> CC
+
     NN -> 'dirty'
     NN -> 'heard'
     NN -> 'hell'
@@ -223,7 +285,6 @@ cfg_1 = CFG.fromstring("""
     VBG -> 'waiting'
     VBG -> 'ring'
     RB -> 'here'
-    RB -> 'n't'
     RB -> 'once'
     RB -> 'anyway'
     RB -> 'funny'
@@ -399,10 +460,10 @@ cfg_1 = CFG.fromstring("""
     VBN -> 'bed'
     VBN -> 'met'
     VBN -> 'seen'
-    PRP$ -> 'their'
-    PRP$ -> 'your'
-    PRP$ -> 'our'
-    PRP$ -> 'his'
+    PRP -> 'their'
+    PRP -> 'your'
+    PRP -> 'our'
+    PRP -> 'his'
     JJR -> 'younger'
     WDT -> 'which'
     MD -> 'wo'
@@ -413,28 +474,9 @@ cfg_1 = CFG.fromstring("""
     JJS -> 'greatest'
     CC -> 'and'
     CC -> 'but'
-    S -> NP VP
-    NP -> Pro
-    NP -> NP PP
-    NP -> D N
-    NP -> Adj NP
-    NP -> CC NP
-    VP -> V PP
-    VP -> V N
-    VP -> V Adv Vt Vtt PP
-    VP -> V PP
-    VP -> V NP
-    VP -> V PP CC
-    VP -> V Adj
-    VP -> V Prep Vt N Vtt
-    V -> V Vt N V
-    V -> V Vt NP
-    V -> V Vt Pro Prep C Vt Pro Vtt
-    N -> Adj N
-    PP -> Prep NP
-    PP -> Prep N
-    PP -> Prep V Pro
-    Adj -> Adj Adj
-    CC -> Conj NP VP
-    
+
 """)
+
+
+for sentence in generate(cfg_1, depth=5):
+    print(' '.join(sentence))
