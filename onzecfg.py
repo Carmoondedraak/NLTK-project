@@ -444,6 +444,5 @@ cfg_1 = CFG.fromstring("""
     MD -> 'should'
     JJS -> 'greatest'
     CC -> 'and'
-    CC -
-    > 'but'
+    CC -> 'but'
 """)

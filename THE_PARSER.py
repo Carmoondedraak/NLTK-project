@@ -1,6 +1,28 @@
 from nltk.grammar import FeatureGrammar
 from nltk import CFG
 from nltk.parse.generate import generate, demo_grammar
+from nltk.parse import RecursiveDescentParser, FeatureEarleyChartParser, ChartParser
+from nltk.tokenize import sent_tokenize
+import nltk
+from random import choice
+from main import read
+
+# Function that works for multiple types of parsers
+def check_sentence(parser, sentence):
+    print("--------------------------------------------------")
+    print("Checking if provided sentence matches the grammar:")
+    print(sentence)
+    if isinstance(sentence, str):
+        sentence = sentence.split()
+    tree_found = False
+    results = parser.parse(sentence)
+    for tree in results:
+        tree_found = True
+        print(tree)
+    if not tree_found:
+        print(sentence, "Does not match the provided grammar.")
+    print("--------------------------------------------------")
+    return tree_found
 
 ###################### THE CFG #############################
 
@@ -17,11 +39,11 @@ cfg_1 = CFG.fromstring("""
     NP -> D Adj N
     NP -> D N
     NP -> CCC NP
-    VP -> V VP
     V -> V V N V
     V -> V V NP
     V -> V V Pro Prep C V Pro V
     VP -> VP VP
+    VP -> V VP
     VP -> Adv V
     VP -> V PP
     VP -> V Adj
@@ -34,12 +56,14 @@ cfg_1 = CFG.fromstring("""
     VP -> V NP
     VP -> V Adv V V PP
     VP -> V Prep V N V
+    VP -> V V
     PP -> Prep NP
     PP -> Prep N
     PP -> PP PP
     PP -> Prep V Pro
     N -> Adj N
-    CCC -> Conj NP VP
+    N -> D Adj
+    CC -> Conj NP VP
 
 
     N -> NN
@@ -58,138 +82,133 @@ cfg_1 = CFG.fromstring("""
     Adv -> WRB
     Pro -> PRP
     Pro -> WP
-    Det -> DT
-    Det -> WDT
+    D -> DT
+    D -> WDT
     Prep -> IN
     C -> CC
 
-    NN -> 'dirty'
-    NN -> 'heard'
-    NN -> 'hell'
-    NN -> 'sound'
-    NN -> 'day'
-    NN -> 'understand'
-    NN -> 'introduction'
-    NN -> 'collect'
-    NN -> 'fall'
-    NN -> 'because…'
-    NN -> 'pet'
-    NN -> 'temper'
-    NN -> 'road'
-    NN -> 'tarantula'
-    NN -> 'guy'
-    NN -> 'drive'
-    NN -> 'class'
-    NN -> 'drawn'
-    NN -> 'smart'
-    NN -> 'baby'
-    NN -> 'cross'
-    NN -> 'hand'
-    NN -> 'mom'
-    NN -> 'hey'
-    NN -> 'car'
-    NN -> 'lot'
-    NN -> 'story'
-    NN -> 'cobweb'
-    NN -> 'town'
-    NN -> 'll'
-    NN -> 'month'
-    NN -> 'stood'
-    NN -> 'hour'
-    NN -> 'toilet'
-    NN -> 'tell'
-    NN -> 'eat'
-    NN -> 'cost'
-    NN -> 'come'
-    NN -> 'nobody'
-    NN -> 'night'
-    NN -> 'fault'
-    NN -> 'bring'
-    NN -> 'name'
-    NN -> 'let'
-    NN -> 'someone'
-    NN -> 'break'
-    NN -> 'beat'
-    NN -> 'join'
-    NN -> 'bathroom'
-    NN -> 'bell'
-    NN -> 'felt'
-    NN -> 'guard'
-    NN -> 'nothing'
-    NN -> 'something'
-    NN -> 'everyone'
-    NN -> 'bottom'
-    NN -> 'change'
-    NN -> 'school'
-    NN -> 'book'
-    NN -> 'bedroom'
-    NN -> 'sleep'
-    NN -> 'stick'
-    NN -> 'end'
-    NN -> 'cool'
-    NN -> 'hung'
-    NN -> 'way'
-    NN -> 'throat'
-    NN -> 'life'
-    NN -> 're'
-    NN -> 'needless'
-    NN -> 'care'
-    NN -> 'dare'
-    NN -> 'worse'
-    NN -> 'time'
-    NN -> 's'
-    NN -> 'everything'
-    NN -> 'reason'
-    NN -> 'vacuum'
-    NN -> 'thing'
-    NN -> 'look'
-    NN -> 'wildness'
-    NN -> 'hunt'
-    NN -> 'money'
-    NN -> 'gift'
-    NN -> 'country'
-    NN -> 'sister'
-    NN -> 'imagine'
-    NN -> 'steve'
-    NN -> 'watch'
-    NN -> 'everybody'
-    NN -> 'slip'
-    NNS -> 'cobwebs'
-    NNS -> 'hours'
-    NNS -> 'predators'
-    NNS -> 'rotten'
-    NNS -> 'women'
-    NNS -> 'characters'
-    NNS -> 'teachers'
-    NNS -> 'eggs'
-    NNS -> 'wins'
-    NNS -> 'fights'
-    NNS -> 'people'
-    NNS -> 'stores'
-    NNS -> 'bones'
-    NNS -> 'works'
-    NNS -> 'mistakes'
+    NNS -> 'calls'
+    NNS -> 'noises'
+    NNS -> 'pants'
     NNS -> 'names'
     NNS -> 'sorts'
-    NNS -> 'parents'
-    NNS -> 'noises'
-    NNS -> 'calls'
-    NNS -> 'costs'
-    NNS -> 'kindergarten'
-    NNS -> 'cockroaches'
-    NNS -> 'books'
-    NNS -> 'tantrums'
-    NNS -> 'flies'
-    NNS -> 'things'
-    NNS -> 'spiders'
-    NNS -> 'pieces'
-    NNS -> 'endings'
-    NNS -> 'friends'
-    NNS -> 'reasons'
-    NNS -> 'pants'
-    NNS -> 'ends'
     NNS -> 'prizes'
-    JJ -> 'tale'
+    NNS -> 'tantrums'
+    NNS -> 'stores'
+    NNS -> 'works'
+    NNS -> 'cleaners'
+    NNS -> 'people'
+    NNS -> 'spiders'
+    NNS -> 'loads'
+    NNS -> 'predators'
+    NNS -> 'hours'
+    NNS -> 'cockroaches'
+    NNS -> 'costs'
+    NNS -> 'treats'
+    NNS -> 'mistakes'
+    NNS -> 'parents'
+    NNS -> 'tears'
+    NNS -> 'pieces'
+    NNS -> 'things'
+    NNS -> 'books'
+    NNS -> 'teachers'
+    NNS -> 'reasons'
+    NNS -> 'heroes'
+    NNS -> 'wins'
+    NNS -> 'characters'
+    NNS -> 'bones'
+    NNS -> 'tale'
+    NNS -> 'eggs'
+    NNS -> 'knows'
+    NNS -> 'women'
+    NNS -> 'friends'
+    NN -> 'mine'
+    NN -> 'vacuum'
+    NN -> 'begin'
+    NN -> 'friend'
+    NN -> 'throat'
+    NN -> 'because…'
+    NN -> 'watch'
+    NN -> 'fault'
+    NN -> 'car'
+    NN -> 'make'
+    NN -> 'shan'
+    NN -> 'dusty'
+    NN -> 'humming'
+    NN -> 'guy'
+    NN -> 'reason'
+    NN -> 'child'
+    NN -> 'book'
+    NN -> 'storm'
+    NN -> 'story'
+    NN -> 'day'
+    NN -> 'nothing'
+    NN -> 'dalton'
+    NN -> 'sliding'
+    NN -> 'tell'
+    NN -> 'way'
+    NN -> 'road'
+    NN -> 'stroller'
+    NN -> 'laying'
+    NN -> 'join'
+    NN -> 'thing'
+    NN -> 'night'
+    NN -> 'slip'
+    NN -> 'time'
+    NN -> 'name'
+    NN -> 'kill'
+    NN -> 'everything'
+    NN -> 'end'
+    NN -> 'money'
+    NN -> 'sleep'
+    NN -> 'fall'
+    NN -> 'garden'
+    NN -> 'head'
+    NN -> 've'
+    NN -> 'nobody'
+    NN -> 'drive'
+    NN -> 'something'
+    NN -> 'hunt'
+    NN -> 'month'
+    NN -> 'cost'
+    NN -> 'matter'
+    NN -> 'd'
+    NN -> 'eat'
+    NN -> 'bed'
+    NN -> 'ripped'
+    NN -> 'everyone'
+    NN -> 'lunch'
+    NN -> 'threw'
+    NN -> 'bag'
+    NN -> 'introduction'
+    NN -> 'life'
+    NN -> 'baby'
+    NN -> 'country'
+    NN -> 'describe'
+    NN -> 'school'
+    NN -> 'bottom'
+    NN -> 'lot'
+    NN -> 'town'
+    NN -> 'get'
+    NN -> 'toilet'
+    NN -> 'song'
+    NN -> 'hatch'
+    NN -> 'collect'
+    NN -> 'care'
+    NN -> 'guard'
+    NN -> 'stick'
+    NN -> 'hand'
+    NN -> 'bedroom'
+    NN -> 'hour'
+    NN -> 'everybody'
+    NN -> 'bathroom'
+    NN -> 'sound'
+    NN -> 'someone'
+    NN -> 'look'
+    NN -> 'crazy'
+    NN -> 'imagine'
+    NN -> 'class'
+    NN -> 'gift'
     JJ -> 'crazy'
     JJ -> 'other'
     JJ -> 'ready'
@@ -285,6 +304,7 @@ cfg_1 = CFG.fromstring("""
     VBG -> 'waiting'
     VBG -> 'ring'
     RB -> 'here'
+    RB -> 'not'
     RB -> 'once'
     RB -> 'anyway'
     RB -> 'funny'
@@ -371,6 +391,7 @@ cfg_1 = CFG.fromstring("""
     VBD -> 'nodded'
     VBD -> 'ran'
     RP -> 'out'
+    IN -> 'by'
     IN -> 'd'
     IN -> 'like'
     IN -> 'around'
@@ -432,6 +453,7 @@ cfg_1 = CFG.fromstring("""
     VB -> 'make'
     VB -> 'more'
     VB -> 'go'
+    VB -> 'have'
     VB -> 'myself'
     VBZ -> 'goes'
     VBZ -> 'unfolds'
@@ -474,9 +496,11 @@ cfg_1 = CFG.fromstring("""
     JJS -> 'greatest'
     CC -> 'and'
     CC -> 'but'
-
 """)
 
 
-for sentence in generate(cfg_1, depth=5):
-    print(' '.join(sentence))
+#for sentence in generate(cfg_1, depth=5):
+#    print(' '.join(sentence))
+
+#parser = ChartParser(cfg_1)
+#check_sentence(parser, 'I kill leonard in his bedroom')
